@@ -14,7 +14,7 @@
  * @return {number[]}
  */
 
- // time: o((log N) + M) where m is sorting potions
+ // time: o(m(log m) + n(log m)) === o((m+n) log m), sort m potions once, then do binary search on potions length N times
  // space: o(1)
 var successfulPairs = function(spells, potions, success) {
     // return number of successful pairs for each spell/potion index products
