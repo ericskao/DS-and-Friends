@@ -21,7 +21,7 @@
 
 var rightSideView = function(root) {
     let queue = [root]
-    let levelBreadth = root?.val ? 1 : 0
+    let levelBreadth = root ? 1 : 0
     let output = []
     while(levelBreadth > 0){
       let rightMostNode = null
