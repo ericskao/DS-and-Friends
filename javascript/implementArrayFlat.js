@@ -47,4 +47,3 @@ console.log(flat(arr, 1))
 
 // flat(arr, 2)
 // [1, 2, 3, 4]
-console.log('hi')
