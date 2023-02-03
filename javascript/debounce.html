@@ -1,0 +1,32 @@
+<!-- debounce works well for filtering while you are typing (only change after you are done typing), validation only happening after a certain amount of time, or preventing accidental double clicks (pressing buy twice) -->
+
+<script>
+  const initApp = () => {
+    const button = document.querySelector('button')
+    button.addEventListener('click', debounce(clickLog, 2000))
+  }
+
+  const clickLog = () => {
+    console.log('clicked')
+  }
+
+  document.addEventListener('DOMContentLoaded', initApp)
+
+  // debounce takes a function and invokes it after some delay
+  const debounce = (fn, delay) => {
+    let id
+    console.log(`id at immediate load ${id}`) // this is only logged at load time (after the event has been added), but the click event now returns the anonymous function below (debounce returns a function)
+    return (...args) => { // this is handler
+      console.log(`previous id: ${id}`)
+      if (id) clearTimeout(id) // if delay is already in progress, clear it and call settimeout again
+      // settimeout only executes the function after delay
+      id = setTimeout(() => { // settimeout returns an integer value which identifies the timer which can be used to cancel it
+        fn(...args)
+      }, delay)
+    }
+  }
+
+
+</script>
+
+<button>Click me</button>
