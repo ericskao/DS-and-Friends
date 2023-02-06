@@ -1,0 +1,46 @@
+<script>
+  const initApp = () => {
+    const input = document.querySelector('input')
+
+    const throttle = (cb, delay = 1000) => {
+      let shouldWait = false
+      let waitingArgs;
+      // throttle will invoke immediately
+      // then wait delay before clearing
+      return (...args) => {
+        if (shouldWait) {
+          waitingArgs = args
+          return
+        }
+        cb(...args)
+        shouldWait = true
+        // after invoking right away, wait delay
+        // if input is updated while waiting, save the args in global
+        // after the delay, call the function with saved args and clear saved args
+        setTimeout(() => {
+          shouldWait = false
+          if (waitingArgs) {
+            cb(...waitingArgs)
+            waitingArgs = null
+          }
+        }, delay)
+      }
+    }
+
+    const updateSpanText = throttle((text) => {
+      document.getElementById('text').textContent = text
+    }, 3000)
+
+    input.addEventListener('input', (e) => {
+      // calls update span text when input changes
+      updateSpanText(e.target.value)
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', initApp)
+</script>
+
+<div>
+  <input />
+  Throttle: <span id="text" />
+</div>
