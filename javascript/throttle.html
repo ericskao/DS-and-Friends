@@ -5,6 +5,14 @@
     const throttle = (cb, delay = 1000) => {
       let shouldWait = false
       let waitingArgs;
+      const timeoutFunc = () => {
+        shouldWait = false
+        if (waitingArgs) {
+          cb(...waitingArgs)
+          waitingArgs = null
+          setTimeout(timeoutFunc, delay)
+        }
+      }
       // throttle will invoke immediately
       // then wait delay before clearing
       return (...args) => {
@@ -17,13 +25,7 @@
         // after invoking right away, wait delay
         // if input is updated while waiting, save the args in global
         // after the delay, call the function with saved args and clear saved args
-        setTimeout(() => {
-          shouldWait = false
-          if (waitingArgs) {
-            cb(...waitingArgs)
-            waitingArgs = null
-          }
-        }, delay)
+        setTimeout(timeoutFunc, delay)
       }
     }
 
