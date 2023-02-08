@@ -39,7 +39,8 @@
 // 1 <= hour <= 109
 // There will be at most two digits after the decimal point in hour.
 
-
+// time: o(n log 10^7)
+// space: o(1)
 var minSpeedOnTime = function(dist, hour) {
     if(dist.length > Math.ceil(hour)) return -1
 

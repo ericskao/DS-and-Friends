@@ -29,7 +29,37 @@
  * @return {number}
  */
 
-// use DFS where we follow along the node and change each to visited
+
+// disjoint set
+// keep track of all root nodes in a root array
+// when we union the set, each time we find connected cities, set the root values for connected cities as val of lesser city
+// return number of distinct values in root array
+const findCircleNumSet = (isConnected) => {
+    // going through each 'city' row, make a disjoint set with the value being root parent value
+    let rootArr = [...Array(isConnected.length).keys()] // each city index has itself as root initially
+    // all these values should be filled with root nodes by end of iteration
+    for(let i = 0; i<isConnected.length; i++){
+        for(let j = 0; j<isConnected.length; j++){
+            if(isConnected[i][j] === 1 && i !== j && rootArr[i] !== rootArr[j]){ // if they are connected and each other's root nodes are not equal, need to set same root for both
+                // use lower index as root
+                let min = rootArr[i] > rootArr[j] ? rootArr[j] : rootArr[i]
+                let max = rootArr[i] > rootArr[j] ? rootArr[i] : rootArr[j]
+                let rootVal = rootArr[min]
+                // need to check if any other indexes have max as their value, and change it to min
+                for(let k = 0; k<rootArr.length; k++){
+                    if(rootArr[k] === max){
+                        rootArr[k] = rootVal
+                    }
+                }
+            }
+        }
+    }
+    // check how many distinct values there are in rootArr
+    return new Set(rootArr).size
+}
+
+// use DFS where we follow along the node and change each to visited (visited array with city index)
+// each time we see a city we have not visited, dfs into all the connected cities (only incrementing provinces once on initial dfs in first loop)
 var findCircleNum = function(isConnected) {
     let n = isConnected.length
     let visited = Array(n).fill(0)
@@ -52,3 +82,4 @@ var findCircleNum = function(isConnected) {
     }
     return provinces
 };
+

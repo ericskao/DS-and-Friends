@@ -1,3 +1,5 @@
+<!-- throttle works by invoking the callback function and then setting a delay which will pass before calling the function again (if it is invoked). good for resizing and mouse scrolls. (If you keep moving a mouse event, it will be throttled and only call once ever delay seconds) -->
+
 <script>
   const initApp = () => {
     const input = document.querySelector('input')
